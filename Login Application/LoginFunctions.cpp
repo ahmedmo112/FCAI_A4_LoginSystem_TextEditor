@@ -12,9 +12,9 @@ map<int, Users> users;
 
 void menu();
 void extractFileData();
-void is_valid_name();
-void is_valid_email();
-void is_valid_phoneNumber();
+bool is_valid_name();
+bool is_valid_email();
+bool is_valid_phoneNumber();
 void userId();
 void userName();
 void email();
@@ -23,6 +23,7 @@ void phoneNumber();
 void assign_to_map();
 void store_data();
 void reg();
+bool isRegID(int id);
 
 void menu()
 {
@@ -80,7 +81,7 @@ void userId()
     cout << "Please enter your id: ";
     cin >> user.userId;
 
-    while (user.userId == users.find(user.userId)->first)
+    while (isRegID(user.userId))
     {
         cout << "you entered ID that has been registered, please enter another ID:  ";
         cin >> user.userId;
@@ -197,7 +198,7 @@ void login(){
         // user.oldPassword =str;
         //TODO: replace password with *****
         //TODO: decrypt password from data to compare
-        if(users[user.userId].password== user.password and isRegID(user.userId)){
+        if(users[user.userId].password== user.password && isRegID(user.userId)){
             cout<<"Successful login, welcome "<<users[user.userId].userName<<endl;
             break;
         }else
