@@ -4,6 +4,7 @@
 #include <string>
 #include <regex>
 #include <map>
+#include <iomanip>
 // #include <conio.h>
 
 using namespace std;
@@ -24,6 +25,9 @@ void assign_to_map();
 void store_data();
 void reg();
 bool isRegID(int id);
+
+string encrypt(string password);
+string decrypt(string e_password);
 
 void menu()
 {
@@ -130,7 +134,6 @@ void phoneNumber()
         cout << "you entered phone number with incorrect format, please enter correct phone number: ";
         cin >> user.phoneNumber;
     }
-
 }
 
 void assign_to_map()
@@ -139,11 +142,12 @@ void assign_to_map()
     users[user.userId].userName = user.userName;
     users[user.userId].email = user.email;
     users[user.userId].oldPassword = "";
-    users[user.userId].password = user.password;
+    users[user.userId].password = encrypt(user.password);
     users[user.userId].phoneNumber = user.phoneNumber;
 }
 
-void store_data(){
+void store_data()
+{
     fstream file;
     file.open("data.txt", ios::out);
     for (auto i : users)
@@ -170,7 +174,8 @@ void reg()
     store_data();
 }
 
-bool isRegID(int id){
+bool isRegID(int id)
+{
     if (users[id].userId == 0)
     {
         return false;
@@ -178,43 +183,76 @@ bool isRegID(int id){
     return true;
 }
 
-void login(){
-    int id,trials=4;
+void login()
+{
+    int id, trials = 4;
     string password;
-    while (trials !=0)
+    while (trials != 0)
     {
-        cout<< "Enter your ID: ";
-        cin>>user.userId;
-        cout<< "Enter your password: ";
-        cin>> user.password;
+        cout << "Enter your ID: ";
+        cin >> user.userId;
+        cout << "Enter your password: ";
+        cin >> user.password;
         // string str;
         // char chr;
         // cin.ignore();
         // while (chr = _getch()!='\n')
         // {
         //     str+=chr;
-        //     cout<<"*";     
+        //     cout<<"*";
         // }
         // user.oldPassword =str;
-        //TODO: replace password with *****
-        //TODO: decrypt password from data to compare
-        if(users[user.userId].password== user.password && isRegID(user.userId)){
-            cout<<"Successful login, welcome "<<users[user.userId].userName<<endl;
-            break;
-        }else
+        user.password = encrypt(user.password);
+        // TODO: replace password with *****
+        // TODO: decrypt password from data to compare
+        if (users[user.userId].password == user.password && isRegID(user.userId))
         {
-            cout<<"Failed login. Try again."<<endl; 
-            trials--; 
-            if (trials<4)
+            cout << "Successful login, welcome " << users[user.userId].userName << endl;
+            cout << "TEST: Password *after decryption* " << decrypt(user.password) << endl; // Testing decryption##############
+            break;
+        }
+        else
+        {
+            cout << "Failed login. Try again." << endl;
+            trials--;
+            if (trials < 4)
             {
-                cout<< "You have "<<trials<<" trials\n";
+                cout << "You have " << trials << " trials\n";
                 if (trials == 0)
                 {
-                    cout<<"You have denied access to the system!!!\n";
+                    cout << "You have denied access to the system!!!\n";
                     break;
                 }
-                
             }
-        }   
-    }  
+        }
+    }
+}
+
+string encrypt(string password)
+{
+    string hex_text = "";
+    for (int i = 0; i < password.length(); i++) // for loop for each charachter
+    {
+        ostringstream s;                                         // string stream type
+        password[i] = (password[i] ^ 'z');                       // XOR between key and the char
+        s << setfill('0') << setw(2) << hex << int(password[i]); // if the XOR return hex one digit
+                                                                 // number then fill the right digit with 0
+        hex_text += s.str();                                     // convert the stream variable to string and add it to hex text
+    }
+
+    return hex_text; // print the hex text
+}
+
+string decrypt(string e_password)
+{
+    char chr;
+    string originalPassword;
+    int len = e_password.length(); // get the length of hex text
+    for (int i = 0; i < len; i += 2)
+    {
+        string two_digit = e_password.substr(i, 2);           // get the two digit for every hex from hex text
+        chr = (char)(int)strtol(two_digit.c_str(), NULL, 16); // convert two digit to long intger at 16 system (hex)
+        originalPassword += (char)(chr ^ 'z');                // print the char of the original message
+    }
+    return originalPassword;
 }
