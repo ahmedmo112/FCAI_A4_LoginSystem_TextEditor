@@ -3,5 +3,6 @@
 
 int main(){
     extractFileData();
-    test();
+    // test();
+    login();
 }
