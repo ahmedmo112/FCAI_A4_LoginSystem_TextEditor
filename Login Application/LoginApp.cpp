@@ -4,10 +4,6 @@
 int main(){
     int choice;
     extractFileData();
-<<<<<<< HEAD
-    // test();
-    login();
-=======
 
     while (true)
     {
@@ -19,7 +15,7 @@ int main(){
         }
         else if (choice == 2)
         {
-            return 0;
+            login();
         }
         else if (choice == 3)
         {
@@ -34,5 +30,4 @@ int main(){
             cout << "wrong choice, please choose again" << endl;
         }
     }
->>>>>>> 492aa8cc456c335c9fb87adcbb878beac779f024
 }

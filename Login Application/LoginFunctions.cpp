@@ -57,59 +57,6 @@ void extractFileData()
     file.close();
 }
 
-<<<<<<< HEAD
-void test(){ // for test that the data is saved at map 
-    // int id;
-    // cout<<"Enter user id: ";
-    // cin>>id;
-    // cout<<"name: "<<users[id].name<<endl;
-    // cout<<"email: "<<users[id].email<<endl;
-    // cout<<"password: "<<users[id].password<<endl;
-    // cout<<"phone: "<<users[id].phoneNumber<<endl;
-    for(auto e:users){
-        cout<<e.second.email<<endl;
-    }
-}
-
-void login(){
-    int id,trials=4;
-    string password;
-    while (trials !=0)
-    {
-        cout<< "Enter your ID: ";
-        cin>>id;
-        cout<< "Enter your password: ";
-        cin>> password;
-        // string str;
-        // char chr;
-        // cin.ignore();
-        // while (chr = _getch()!='\n')
-        // {
-        //     str+=chr;
-        //     cout<<"*";     
-        // }
-        //TODO: replace password with *****
-        //TODO: decrypt password from data to compare
-        if(users[id].password==password){
-            cout<<"Successful login, welcome "<<users[id].name<<endl;
-            break;
-        }else
-        {
-            cout<<"Failed login. Try again."<<endl; 
-            trials--; 
-            if (trials<4)
-            {
-                cout<< "You have "<<trials<<" trials\n";
-                if (trials == 0)
-                {
-                    cout<<"You have denied access to the system!!!\n";
-                    break;
-                }
-                
-            }
-        }   
-    }  
-=======
 bool is_valid_name(string str3)
 {
     regex valid_name("[a-zA-Z_]+");
@@ -122,7 +69,6 @@ bool is_valid_email(string str)
     // regex valid_email("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
     return regex_match(str, valid_email);
 }
-
 bool is_valid_phoneNumber(string str2)
 {
     regex valid_PN("(01)(0|1|2|5)[0-9]+");
@@ -183,7 +129,7 @@ void phoneNumber()
         cout << "you entered phone number with incorrect format, please enter correct phone number: ";
         cin >> user.phoneNumber;
     }
->>>>>>> 492aa8cc456c335c9fb87adcbb878beac779f024
+
 }
 
 void assign_to_map()
@@ -191,12 +137,12 @@ void assign_to_map()
     users[user.userId].userId = user.userId;
     users[user.userId].userName = user.userName;
     users[user.userId].email = user.email;
-    users[user.userId].oldPassword = "old pass";
+    users[user.userId].oldPassword = "";
     users[user.userId].password = user.password;
     users[user.userId].phoneNumber = user.phoneNumber;
 }
 
-{
+void store_data(){
     fstream file;
     file.open("data.txt", ios::out);
     for (auto i : users)
@@ -221,4 +167,53 @@ void reg()
     phoneNumber();
     assign_to_map();
     store_data();
+}
+
+bool isRegID(int id){
+    if (users[id].userId == 0)
+    {
+        return false;
+    }
+    return true;
+}
+
+void login(){
+    int id,trials=4;
+    string password;
+    while (trials !=0)
+    {
+        cout<< "Enter your ID: ";
+        cin>>user.userId;
+        cout<< "Enter your password: ";
+        cin>> user.password;
+        // string str;
+        // char chr;
+        // cin.ignore();
+        // while (chr = _getch()!='\n')
+        // {
+        //     str+=chr;
+        //     cout<<"*";     
+        // }
+        // user.oldPassword =str;
+        //TODO: replace password with *****
+        //TODO: decrypt password from data to compare
+        if(users[user.userId].password== user.password and isRegID(user.userId)){
+            cout<<"Successful login, welcome "<<users[user.userId].userName<<endl;
+            break;
+        }else
+        {
+            cout<<"Failed login. Try again."<<endl; 
+            trials--; 
+            if (trials<4)
+            {
+                cout<< "You have "<<trials<<" trials\n";
+                if (trials == 0)
+                {
+                    cout<<"You have denied access to the system!!!\n";
+                    break;
+                }
+                
+            }
+        }   
+    }  
 }
