@@ -3,11 +3,11 @@
 using namespace std;
 struct Users
 {
-    int id;
-    string name;
+    int userId;
+    string userName;
     string email;
     string password;
     string oldPassword;
     string phoneNumber;
 
-};
+} user;
