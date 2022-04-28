@@ -1,5 +1,5 @@
+#include "LoginFunctions.h"
 #include "LoginFunctions.cpp"
-#include <iostream>
 
 int main(){
     int choice;
