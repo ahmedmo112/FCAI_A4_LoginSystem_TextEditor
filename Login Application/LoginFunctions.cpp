@@ -393,6 +393,7 @@ void checkIsNotOldpass(){
     }
 }
 void newPass(){
+    cout << "make sure that : \n 1- including letters, numbers, and upper and lower case \n 2- never use less than 8 characters\n ";
     cout<<"Please Enter The New Password: ";
     cin>>pass;
     checkIsNotOldpass();
