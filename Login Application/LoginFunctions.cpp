@@ -1,5 +1,4 @@
-#include "LoginFunctions.h"
-
+#include"LoginFunctions.h"
 
 void menu()
 {
@@ -91,12 +90,155 @@ void email()
     }
 }
 
-void password()
+string passwd2;
+void repeat_password()
 {
-    cout << "Please enter your password: ";
-    cin >> user.password;
+    int chh;
+    while (chh = getch())
+    {
+        if (chh == 13)
+        {
+            break;
+        }
+        else if (chh == 8)
+        {
+            if (passwd2.length() > 0)
+            {
+                cout << "\b \b";
+                passwd2.erase(passwd2.length() - 1);
+            }
+        }
+        else
+        {
+            cout << "*";
+            passwd2 += chh;
+        }
+    }
 }
 
+string passwd;
+void coverpassword()
+{
+    int ch = 0;
+    while (ch = getch())
+    {
+        if (ch == 13)
+        {
+            break;
+        }
+        else if (ch == 8)
+        {
+            if (passwd.length() > 0)
+            {
+                cout << "\b \b";
+                passwd.erase(passwd.length() - 1);
+            }
+        }
+        else
+        {
+            cout << "*";
+            passwd += ch;
+        }
+    }
+}
+
+void compares_passwords()
+{
+    int pass = 3;
+    while (pass > 0)
+    {
+        if (passwd != passwd2)
+        {
+            passwd2 = "";
+            cout << endl;
+            cout << "passwords are not the same \n please enter it again : ";
+            repeat_password();
+            pass -= 1;
+        }
+        else
+        {
+            break;
+        }
+    }
+}
+
+void StrongNess(string &input)
+{
+    int n = input.length();
+
+    // Checking lower alphabet in string
+    bool hasLower = false, hasUpper = false;
+    bool hasDigit = false, specialChar = false;
+    string normalChars = "abcdefghijklmnopqrstu"
+                         "vwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
+
+    for (int i = 0; i < n; i++)
+    {
+        if (islower(input[i]))
+            hasLower = true;
+        if (isupper(input[i]))
+            hasUpper = true;
+        if (isdigit(input[i]))
+            hasDigit = true;
+
+        size_t special = input.find_first_not_of(normalChars);
+        if (special != string::npos)
+            specialChar = true;
+    }
+    int pass = 3;
+    while (pass > 0)
+    {
+        cout << endl;
+        cout << "Strength of password : ";
+        if (hasLower && hasUpper && hasDigit &&
+            specialChar && (n >= 8))
+        {
+            cout << "Strong" << endl;
+            break;
+        }
+        else if ((hasLower || hasUpper) &&
+                 specialChar && (n >= 6))
+        {
+            cout << "Moderate" << endl;
+            cout << "please enter strong password : ";
+            coverpassword();
+            cout << endl;
+            StrongNess(passwd);
+            cout << "repeat password : ";
+            repeat_password();
+            cout << endl;
+            compares_passwords();
+            pass -= 1;
+        }
+        else
+        {
+            cout << "Weak" << endl;
+            cout << "please enter strong password : ";
+            coverpassword();
+            cout << endl;
+            StrongNess(passwd);
+            cout << "repeat password : ";
+            repeat_password();
+            cout << endl;
+            compares_passwords();
+            pass -= 1;
+        }
+    }
+}
+
+void password()
+{
+    cout << "make sure that : \n 1- including letters, numbers, and upper and lower case \n 2- never use less than 8 characters\n ";
+    cout << "Please enter your password: ";
+    coverpassword();
+    StrongNess(passwd);
+    cout << endl;
+    cout << "repeat password : ";
+    repeat_password();
+    cout << endl;
+    compares_passwords();
+    user.password = passwd;
+}
 void phoneNumber()
 {
     cout << "Please enter your phone number: ";
@@ -160,23 +302,19 @@ string pass;
 void login()
 {
     int id, trials = 4;
-    string password;
+    // string password;
     while (trials != 0)
     {
         cout << "Enter your ID: ";
         cin >> user.userId;
-        cout << "Enter your password: ";
-        cin >> pass;
-        // string str;
-        // char chr;
-        // cin.ignore();
-        // while (chr = _getch()!='\n')
-        // {
-        //     str+=chr;
-        //     cout<<"*";
-        // }
+        cout << "Enter your password : ";
+        coverpassword();
+        cout << endl;
+        user.password = passwd;
+        pass = passwd;
+
         // user.oldPassword =str;
-        user.password = encrypt(pass);
+        user.password = encrypt(passwd);
         // TODO: replace password with *****
         // TODO: decrypt password from data to compare
         if (users[user.userId].password == user.password && isRegID(user.userId))
