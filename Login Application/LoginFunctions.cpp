@@ -155,6 +155,8 @@ bool isRegID(int id)
     return true;
 }
 
+string pass;
+
 void login()
 {
     int id, trials = 4;
@@ -164,7 +166,7 @@ void login()
         cout << "Enter your ID: ";
         cin >> user.userId;
         cout << "Enter your password: ";
-        cin >> user.password;
+        cin >> pass;
         // string str;
         // char chr;
         // cin.ignore();
@@ -174,7 +176,7 @@ void login()
         //     cout<<"*";
         // }
         // user.oldPassword =str;
-        user.password = encrypt(user.password);
+        user.password = encrypt(pass);
         // TODO: replace password with *****
         // TODO: decrypt password from data to compare
         if (users[user.userId].password == user.password && isRegID(user.userId))
@@ -227,4 +229,57 @@ string decrypt(string e_password)
         originalPassword += (char)(chr ^ 'z');                // print the char of the original message
     }
     return originalPassword;
+}
+
+void checkTheOldPass(){
+    cout<<user.userId<<endl;
+    cout<<"Please Enter The Old Password: ";
+    while (true)
+    {
+    cin>>pass;
+    if (decrypt(users[user.userId].password) == pass)
+    {
+        break;
+    }
+    cout<<"Error, Please Re-Enter The Old Password: ";
+    }
+    
+}
+
+void checkIsNotOldpass(){
+    int findIndex = users[user.userId].oldPassword.find(encrypt(pass));
+    if (findIndex > 100)
+    {
+        cout<<"This Password Used Before, Please Enter New One...\n";
+        newPass();
+    }
+}
+void newPass(){
+    cout<<"Please Enter The New Password: ";
+    cin>>pass;
+    checkIsNotOldpass();
+    string newPW;
+    cout<<"Please Enter The New Password Again: ";
+    cin>>newPW;
+    if (newPW != pass)
+    {
+        cout<<"The Passwords doesn't match Please enter it again...\n";
+        newPass();
+    }
+}
+
+void storeAndChangePass(){
+    users[user.userId].oldPassword += " ";
+    users[user.userId].oldPassword += user.password;
+    users[user.userId].password = encrypt(pass);
+}
+
+void changePassword(){
+    cout<<"Please Login First...\n";
+    login();
+    checkTheOldPass();
+    newPass(); 
+    storeAndChangePass();
+    cout<<"Password Changed Successfully\n\n";
+    store_data();
 }
