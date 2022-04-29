@@ -1,4 +1,4 @@
-#include"LoginFunctions.h"
+#include "LoginFunctions.h"
 
 void menu()
 {
@@ -41,7 +41,7 @@ bool is_valid_name(string str3)
 
 bool is_valid_email(string str)
 {
-    regex valid_email("[^.]([a-zA-Z0-9#!%$‘&+*–/=?^_`{|}~][.]?)+@[a-zA-Z]+\.[a-z]+");
+    regex valid_email("[^.]([a-zA-Z0-9#!%$‘&+*–/=?^_`{|}~][.]?)+@[a-zA-Z]+(.)[a-z]+");
     // regex valid_email("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
     return regex_match(str, valid_email);
 }
@@ -120,6 +120,7 @@ string passwd;
 void coverpassword()
 {
     int ch = 0;
+    passwd = "";
     while (ch = getch())
     {
         if (ch == 13)
@@ -162,7 +163,7 @@ void compares_passwords()
     }
 }
 
-void StrongNess(string &input)
+bool StrongNess(string &input)
 {
     int n = input.length();
 
@@ -186,52 +187,38 @@ void StrongNess(string &input)
             specialChar = true;
     }
     int pass = 3;
-    while (pass > 0)
+
+    cout << endl;
+    cout << "Strength of password : ";
+    if (hasLower && hasUpper && hasDigit &&
+        specialChar && (n >= 8))
     {
-        cout << endl;
-        cout << "Strength of password : ";
-        if (hasLower && hasUpper && hasDigit &&
-            specialChar && (n >= 8))
-        {
-            cout << "Strong" << endl;
-            break;
-        }
-        else if ((hasLower || hasUpper) &&
-                 specialChar && (n >= 6))
-        {
-            cout << "Moderate" << endl;
-            cout << "please enter strong password : ";
-            coverpassword();
-            cout << endl;
-            StrongNess(passwd);
-            cout << "repeat password : ";
-            repeat_password();
-            cout << endl;
-            compares_passwords();
-            pass -= 1;
-        }
-        else
-        {
-            cout << "Weak" << endl;
-            cout << "please enter strong password : ";
-            coverpassword();
-            cout << endl;
-            StrongNess(passwd);
-            cout << "repeat password : ";
-            repeat_password();
-            cout << endl;
-            compares_passwords();
-            pass -= 1;
-        }
+        cout << "Strong" << endl;
+        return true;
+    }
+    else if ((hasLower || hasUpper) &&
+             specialChar && (n >= 6))
+    {
+        cout << "Moderate" << endl;
+        return false;
+    }
+    else
+    {
+        cout << "Weak" << endl;
+        return false;
     }
 }
 
 void password()
 {
-    cout << "make sure that : \n 1- including letters, numbers, and upper and lower case \n 2- never use less than 8 characters\n ";
-    cout << "Please enter your password: ";
-    coverpassword();
-    StrongNess(passwd);
+    cin.ignore();
+    do
+    {
+        cout << "\nmake sure that : \n 1- including letters, numbers, and upper and lower case \n 2- never use less than 8 characters\n ";
+        cout << "Please enter your password: ";
+        coverpassword();
+        // StrongNess(passwd);
+    } while (!(StrongNess(passwd)));
     cout << endl;
     cout << "repeat password : ";
     repeat_password();
@@ -312,7 +299,7 @@ void login()
         cout << endl;
         user.password = passwd;
         pass = passwd;
-
+        cout << "var: " << passwd << endl;
         // user.oldPassword =str;
         user.password = encrypt(passwd);
         // TODO: replace password with *****
@@ -369,56 +356,66 @@ string decrypt(string e_password)
     return originalPassword;
 }
 
-void checkTheOldPass(){
-    cout<<user.userId<<endl;
-    cout<<"Please Enter The Old Password: ";
+void checkTheOldPass()
+{
+    cout << user.userId << endl;
+    cout << "Please Enter The Old Password: ";
     while (true)
     {
-    cin>>pass;
-    if (decrypt(users[user.userId].password) == pass)
-    {
-        break;
+        coverpassword();
+        if (decrypt(users[user.userId].password) == passwd)
+        {
+            break;
+        }
+        cout << "Error, Please Re-Enter The Old Password: ";
     }
-    cout<<"Error, Please Re-Enter The Old Password: ";
-    }
-    
 }
 
-void checkIsNotOldpass(){
-    int findIndex = users[user.userId].oldPassword.find(encrypt(pass));
-    if (findIndex > 100)
+void checkIsNotOldpass()
+{
+    int findIndex = users[user.userId].oldPassword.find(encrypt(passwd));
+    if (findIndex < 100)
     {
-        cout<<"This Password Used Before, Please Enter New One...\n";
+        cout << "This Password Used Before, Please Enter New One...\n";
         newPass();
     }
 }
-void newPass(){
-    cout << "make sure that : \n 1- including letters, numbers, and upper and lower case \n 2- never use less than 8 characters\n ";
-    cout<<"Please Enter The New Password: ";
-    cin>>pass;
+void newPass()
+{
+    // passwd = "";
+    // cin.ignore();
+    do
+    {
+        cout << "\nmake sure that : \n 1- including letters, numbers, and upper and lower case \n 2- never use less than 8 characters\n ";
+        cout << "Please Enter The New Password: ";
+        coverpassword();
+        // StrongNess(passwd);
+    } while (!(StrongNess(passwd)));
     checkIsNotOldpass();
-    string newPW;
-    cout<<"Please Enter The New Password Again: ";
-    cin>>newPW;
-    if (newPW != pass)
+    // string passwd2;
+    cout << "Please Enter The New Password Again: ";
+    repeat_password();
+    if (passwd2 != passwd)
     {
-        cout<<"The Passwords doesn't match Please enter it again...\n";
+        cout << "The Passwords doesn't match Please enter it again...\n";
         newPass();
     }
 }
 
-void storeAndChangePass(){
+void storeAndChangePass()
+{
     users[user.userId].oldPassword += " ";
     users[user.userId].oldPassword += user.password;
-    users[user.userId].password = encrypt(pass);
+    users[user.userId].password = encrypt(passwd);
 }
 
-void changePassword(){
-    cout<<"Please Login First...\n";
+void changePassword()
+{
+    cout << "Please Login First...\n";
     login();
     checkTheOldPass();
-    newPass(); 
+    newPass();
     storeAndChangePass();
-    cout<<"Password Changed Successfully\n\n";
+    cout << "Password Changed Successfully\n\n";
     store_data();
 }
