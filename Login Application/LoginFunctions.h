@@ -19,7 +19,6 @@ struct Users
     string userName;
     string email;
     string password;
-    string oldPassword;
     string phoneNumber;
 
 } user;
