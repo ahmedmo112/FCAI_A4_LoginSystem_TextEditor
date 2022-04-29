@@ -19,7 +19,7 @@ int main(){
         }
         else if (choice == 3)
         {
-            return 0;
+            changePassword();
         }
         else if (choice == 4)
         {

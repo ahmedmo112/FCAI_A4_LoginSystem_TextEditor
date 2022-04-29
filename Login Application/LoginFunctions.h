@@ -42,6 +42,7 @@ void store_data();
 void reg();
 bool isRegID(int id);
 void login();
+void newPass();
 
 string encrypt(string password);
 string decrypt(string e_password);
