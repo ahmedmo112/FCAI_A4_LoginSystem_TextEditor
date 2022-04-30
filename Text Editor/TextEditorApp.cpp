@@ -4,7 +4,5 @@
 int main()
 {
     loadFile();
-    n_WordExist();
-    saveFile();
-    return 0;
+    displayMenu();
 }

@@ -1,10 +1,37 @@
 #include "LoginFunctions.h"
 
-void menu()
+int menu()
 {
-    cout << "Hello user\nWhat do you want to do?" << endl;
+    int choice;
+    
+    cout << "\nHello user\nWhat do you want to do?" << endl;
     cout << "1-Register\n2-Login\n3-Change Password\n4-Exit" << endl;
     cout << "Please choose: ";
+    cin >> choice;
+    cout << endl;
+    while (true)
+    {
+        if (choice == 1)
+        {
+            reg();
+        }
+        else if (choice == 2)
+        {
+            login();
+        }
+        else if (choice == 3)
+        {
+            changePassword();
+        }
+        else if (choice == 4)
+        {
+            return 0;
+        }
+        else
+        {
+            cout << "wrong choice, please choose again" << endl;
+        }
+    }
 }
 
 void extractFileData()
@@ -39,7 +66,7 @@ bool is_valid_name(string str3)
 
 bool is_valid_email(string str)
 {
-    regex valid_email("[^.]([a-zA-Z0-9#!%$‘&+*–/=?^_`{|}~][.]?)+@[a-zA-Z]+(.)[a-z]+");
+    regex valid_email("[^.]([a-zA-Z0-9#!%$‘&+*–/=?^_`{|}~][.]?)+@[a-zA-Z]+(.com)");
     // regex valid_email("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
     return regex_match(str, valid_email);
 }

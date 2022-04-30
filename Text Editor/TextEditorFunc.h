@@ -6,18 +6,26 @@
 #include <cctype>
 #include <cstring>
 #include <vector>
+#include <conio.h>
 
 using namespace std;
 
+fstream file;
 char fileName[100];
 string content;
 
+int displayMeny();
 void loadFile();
+void addingContent();
+void displayContent();
+void eraseContent();
+void encryptContent();
+void decryptContent();
+void n_WordExist();
 string toLower(string str);
 void contentToUpper();
 void contentToLower();
 void firstCap();
-void n_WordExist();
 void saveFile();
 
 #endif
