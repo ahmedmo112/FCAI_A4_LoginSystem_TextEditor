@@ -6,3 +6,6 @@ test 26
 645 yeas lsdfn jdsnf test
 hiii test ahmed testto test
 pushhhhhhhhhhhhhh
+The program will test if such a file exists or not. If it does, it will display a message: "This File Already
+Exists" and it will open it for read and write. If it does not exist, it will create a file with the given name and will
+print a message: "This is a new file. I created it for you  "
