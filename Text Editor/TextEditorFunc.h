@@ -6,7 +6,6 @@
 #include <cctype>
 #include <cstring>
 #include <vector>
-#include <conio.h>
 
 using namespace std;
 

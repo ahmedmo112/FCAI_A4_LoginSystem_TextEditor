@@ -4,13 +4,14 @@ int menu()
 {
     int choice;
     
-    cout << "\nHello user\nWhat do you want to do?" << endl;
-    cout << "1-Register\n2-Login\n3-Change Password\n4-Exit" << endl;
-    cout << "Please choose: ";
-    cin >> choice;
-    cout << endl;
     while (true)
     {
+        cout << "\nHello user\nWhat do you want to do?" << endl;
+        cout << "1-Register\n2-Login\n3-Change Password\n4-Exit" << endl;
+        cout << "Please choose: ";
+        cin >> choice;
+        cout << endl;
+        
         if (choice == 1)
         {
             reg();
