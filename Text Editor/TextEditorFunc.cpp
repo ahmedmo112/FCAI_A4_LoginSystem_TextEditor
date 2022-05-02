@@ -109,7 +109,12 @@ void addingContent()
 {
     char text[10000];
     cout << "Enter the text you want to append: ";
+    cin.ignore();
     cin.getline(text, 10000, char(26));
+    if (!(content == ""))
+    {
+        content += "\n";
+    }
     content += text;
 }
 
