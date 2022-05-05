@@ -228,7 +228,7 @@ void firstCap()
 {
     for (int i = 0; i < content.length(); i++)
     {
-        if (content[i - 1] == ' ' || content[i - 1] == '\n')
+        if (content[i - 1] == ' ' || content[i - 1] == '\n'||i==0)
         {
             content[i] = toupper(content[i]);
         }
@@ -241,10 +241,29 @@ void firstCap()
 
 void saveFile()
 {
-    file.open(fileName, ios::out);
-    for (int i = 0; i < content.length(); i++)
+    int choice;
+    cout<<"For Save The File with The Same File Name Enter 1 \nOr Under a Different Name Enter 2: ";
+    cin>>choice;
+    if (choice == 1)
     {
-        file << content[i];
+        file.open(fileName, ios::out);
+        for (int i = 0; i < content.length(); i++)
+        {
+            file << content[i];
+        }
+        file.close();
+    }else if (choice == 2){
+        char diff_fileName[100];
+        cout<<"Please Enter The new file name (end with .txt): ";
+        cin>>diff_fileName;
+        file.open(diff_fileName, ios::out);
+        for (int i = 0; i < content.length(); i++)
+        {
+            file << content[i];
+        }
+        file.close();
+    }else{
+        cout<<"Error, Please Try Again and 1 Or 2 only...\n";
     }
-    file.close();
+    
 }
