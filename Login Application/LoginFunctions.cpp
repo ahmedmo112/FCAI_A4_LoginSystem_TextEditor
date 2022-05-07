@@ -1,10 +1,38 @@
 #include "LoginFunctions.h"
 
-void menu()
+int menu()
 {
-    cout << "Hello user\nWhat do you want to do?" << endl;
-    cout << "1-Register\n2-Login\n3-Change Password\n4-Exit" << endl;
-    cout << "Please choose: ";
+    int choice;
+    
+    while (true)
+    {
+        cout << "\nHello user\nWhat do you want to do?" << endl;
+        cout << "1-Register\n2-Login\n3-Change Password\n4-Exit" << endl;
+        cout << "Please choose: ";
+        cin >> choice;
+        cout << endl;
+        
+        if (choice == 1)
+        {
+            reg();
+        }
+        else if (choice == 2)
+        {
+            login();
+        }
+        else if (choice == 3)
+        {
+            changePassword();
+        }
+        else if (choice == 4)
+        {
+            return 0;
+        }
+        else
+        {
+            cout << "wrong choice, please choose again" << endl;
+        }
+    }
 }
 
 void extractFileData()
@@ -21,8 +49,6 @@ void extractFileData()
         users[id].userName = ch;
         file.getline(ch, 400);
         users[id].email = ch;
-        file.getline(ch, 400);
-        users[id].oldPassword = ch;
         file.getline(ch, 400);
         users[id].password = ch;
         file.getline(ch, 400);
@@ -41,7 +67,7 @@ bool is_valid_name(string str3)
 
 bool is_valid_email(string str)
 {
-    regex valid_email("[^.]([a-zA-Z0-9#!%$‘&+*–/=?^_`{|}~][.]?)+@[a-zA-Z]+(.)[a-z]+");
+    regex valid_email("[^.]([a-zA-Z0-9#!%$‘&+*–/=?^_`{|}~][.]?)+@[a-zA-Z]+(.com)");
     // regex valid_email("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
     return regex_match(str, valid_email);
 }
@@ -242,7 +268,6 @@ void assign_to_map()
     users[user.userId].userId = user.userId;
     users[user.userId].userName = user.userName;
     users[user.userId].email = user.email;
-    users[user.userId].oldPassword = "";
     users[user.userId].password = encrypt(user.password);
     users[user.userId].phoneNumber = user.phoneNumber;
 }
@@ -256,7 +281,6 @@ void store_data()
         file << i.second.userId << endl;
         file << i.second.userName << endl;
         file << i.second.email << endl;
-        file << i.second.oldPassword << endl;
         file << i.second.password << endl;
         file << i.second.phoneNumber << endl;
         file << endl;
@@ -371,15 +395,6 @@ void checkTheOldPass()
     }
 }
 
-void checkIsNotOldpass()
-{
-    int findIndex = users[user.userId].oldPassword.find(encrypt(passwd));
-    if (findIndex < 100)
-    {
-        cout << "This Password Used Before, Please Enter New One...\n";
-        newPass();
-    }
-}
 void newPass()
 {
     // passwd = "";
@@ -391,7 +406,6 @@ void newPass()
         coverpassword();
         // StrongNess(passwd);
     } while (!(StrongNess(passwd)));
-    checkIsNotOldpass();
     // string passwd2;
     cout << "Please Enter The New Password Again: ";
     repeat_password();
@@ -404,8 +418,6 @@ void newPass()
 
 void storeAndChangePass()
 {
-    users[user.userId].oldPassword += " ";
-    users[user.userId].oldPassword += user.password;
     users[user.userId].password = encrypt(passwd);
 }
 
