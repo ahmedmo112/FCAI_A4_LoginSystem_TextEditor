@@ -6,6 +6,7 @@
 #include <cctype>
 #include <cstring>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -20,6 +21,11 @@ void displayContent();
 void eraseContent();
 void encryptContent();
 void decryptContent();
+void merge();
+void count_words();
+void count_characters();
+void count_lines();
+void find_word();
 void n_WordExist();
 string toLower(string str);
 void contentToUpper();

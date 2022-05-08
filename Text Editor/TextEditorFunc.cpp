@@ -6,7 +6,8 @@ int displayMenu()
 
     while (true)
     {
-        cout << "\nHello user\nWhat do you want to do\n" << endl;
+        cout << "\nHello user\nWhat do you want to do\n"
+             << endl;
         cout << "1-Add new text to the end of the file\n2-Display the content of the file\n3-Empty the file\n4-Encrypt the file content\n5-Decrypt the file content" << endl;
         cout << "6-Merge another file\n7-Count the number of words in the file\n8-Count the number of characters in the file\n9-Count the number of lines in the file\n10-Search for a word in the file" << endl;
         cout << "11-Count the number of times a word exists in the file\n12-Turn the file content to upper case\n13-Turn the file content to lower case\n14-Turn file content to 1st caps\n15-Save\n16-Exit" << endl;
@@ -36,18 +37,23 @@ int displayMenu()
         }
         else if (choice == 6)
         {
+            merge();
         }
         else if (choice == 7)
         {
+            count_words();
         }
         else if (choice == 8)
         {
+            count_characters();
         }
         else if (choice == 9)
         {
+            count_lines();
         }
         else if (choice == 10)
         {
+            find_word();
         }
         else if (choice == 11)
         {
@@ -161,22 +167,121 @@ void decryptContent()
     }
     content = decrypt;
 }
-// void merge (){
-//  fstream file;
-//     fstream file2;
-//      file.open("file.txt",ios::app);
-//      char name[80] ;
-//       char ch[101];
-//      cout<<"Enter file name\n";
-//      cin>>name;
-//      file2.open(name);
-//           while(!file2.eof()){
-//         file2.getline(ch , 100, '\n');
-//         file<<ch<<endl;
-//      }
-//      file.close();
-//      file2.close();
-// }
+
+void merge()
+{
+    fstream file2;
+    char name[80];
+    char ch;
+    cout << "Enter file name\n";
+    cin >> name;
+    file2.open(name);
+    if (file2.fail())
+    {
+        cout << "Invalid File Name" << endl;
+    }
+    else
+    {
+        file2.get(ch);
+        content += '\n';
+        while (!file2.eof())
+        {
+            content += ch;
+            file2.get(ch);
+        }
+        file2.close();
+    }
+}
+
+void count_words()
+{
+    char ch;
+    string word;
+    int wordcount = 0;
+    fstream countw;
+    countw.open(fileName);
+    while (countw >> word)
+    {
+        wordcount++;
+    } 
+    cout << "number of strings is : " << wordcount << endl;
+    countw.close();
+}
+
+void count_characters()
+{
+    string line;
+    char ch;
+    int i, c = 0;
+    fstream countc(fileName);
+
+    if (countc.is_open())
+    {
+
+        while (countc)
+        {
+            countc.get(ch);
+            i = ch;
+            if ((i > 63 && i < 91) || (i > 96 && i < 123) || (i > 47 && i < 58))
+                c++;
+        }
+    }
+    cout << "number of characters is : " << c << endl;
+    countc.close();
+}
+
+void count_lines()
+{
+
+    string line;
+    int count = 0;
+
+    ifstream mfile(fileName);
+
+    if (mfile.is_open())
+    {
+        while (mfile.peek() != EOF)
+        {
+            getline(mfile, line);
+            count++;
+        }
+        mfile.close();
+        cout << "Number of lines in the file are: " << count << endl;
+    }
+    else
+        cout << "Couldn't open the file\n";
+}
+
+void find_word()
+{
+    string word;
+    string word2;
+    ifstream findw(fileName);
+    string a;
+    cout << "enter word \n";
+    cin >> word;
+    bool ans = false;
+    if (findw.is_open())
+    {
+
+        while (findw >> word2)
+        {
+            if (word2 == word)
+            {
+
+                cout << "Yes word is find :)\n \n";
+                ans=true;
+                break;
+            }
+        }
+        findw.close();
+    }
+    else
+        cout << "Unable to open file";
+
+    if (!ans)
+        cout << " Sorry word not find :( " << endl;
+}
 
 void n_WordExist()
 {
@@ -244,7 +349,7 @@ void firstCap()
 {
     for (int i = 0; i < content.length(); i++)
     {
-        if (content[i - 1] == ' ' || content[i - 1] == '\n'||i==0)
+        if (content[i - 1] == ' ' || content[i - 1] == '\n' || i == 0)
         {
             content[i] = toupper(content[i]);
         }
@@ -258,8 +363,8 @@ void firstCap()
 void saveFile()
 {
     int choice;
-    cout<<"For Save The File with The Same File Name Enter 1 \nOr Under a Different Name Enter 2: ";
-    cin>>choice;
+    cout << "For Save The File with The Same File Name Enter 1 \nOr Under a Different Name Enter 2: ";
+    cin >> choice;
     if (choice == 1)
     {
         file.open(fileName, ios::out);
@@ -268,18 +373,21 @@ void saveFile()
             file << content[i];
         }
         file.close();
-    }else if (choice == 2){
+    }
+    else if (choice == 2)
+    {
         char diff_fileName[100];
-        cout<<"Please Enter The new file name (end with .txt): ";
-        cin>>diff_fileName;
+        cout << "Please Enter The new file name (end with .txt): ";
+        cin >> diff_fileName;
         file.open(diff_fileName, ios::out);
         for (int i = 0; i < content.length(); i++)
         {
             file << content[i];
         }
         file.close();
-    }else{
-        cout<<"Error, Please Try Again and 1 Or 2 only...\n";
     }
-    
+    else
+    {
+        cout << "Error, Please Try Again and 1 Or 2 only...\n";
+    }
 }
