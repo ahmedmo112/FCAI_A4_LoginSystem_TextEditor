@@ -161,6 +161,22 @@ void decryptContent()
     }
     content = decrypt;
 }
+// void merge (){
+//  fstream file;
+//     fstream file2;
+//      file.open("file.txt",ios::app);
+//      char name[80] ;
+//       char ch[101];
+//      cout<<"Enter file name\n";
+//      cin>>name;
+//      file2.open(name);
+//           while(!file2.eof()){
+//         file2.getline(ch , 100, '\n');
+//         file<<ch<<endl;
+//      }
+//      file.close();
+//      file2.close();
+// }
 
 void n_WordExist()
 {
