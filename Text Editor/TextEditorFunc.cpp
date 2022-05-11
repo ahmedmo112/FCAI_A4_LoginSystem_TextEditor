@@ -195,92 +195,92 @@ void merge()
 
 void count_words()
 {
-    char ch;
-    string word;
-    int wordcount = 0;
-    fstream countw;
-    countw.open(fileName);
-    while (countw >> word)
+
+    unsigned count = 0;
+    int state = 0, i, out = 0, in = 1;
+
+    while (content[i] != '\0')
     {
-        wordcount++;
-    } 
-    cout << "number of strings is : " << wordcount << endl;
-    countw.close();
+        if (content[i] == ' ' || content[i] == '\n' || content[i] == '\t')
+            state = out;
+        else if (state == out)
+        {
+            state = in;
+            ++count;
+        }
+
+        ++i;
+    }
+    cout << "\nThere are " << count << " word in the given file";
 }
 
 void count_characters()
 {
-    string line;
-    char ch;
-    int i, c = 0;
-    fstream countc(fileName);
-
-    if (countc.is_open())
-    {
-
-        while (countc)
-        {
-            countc.get(ch);
-            i = ch;
-            if ((i > 63 && i < 91) || (i > 96 && i < 123) || (i > 47 && i < 58))
-                c++;
-        }
-    }
-    cout << "number of characters is : " << c << endl;
-    countc.close();
+    cout << "number of characters is : " << content.length() << endl;
 }
 
 void count_lines()
 {
 
-    string line;
-    int count = 0;
-
-    ifstream mfile(fileName);
-
-    if (mfile.is_open())
+    int count = 1, i = 0;
+    while (content[i] != '\0')
     {
-        while (mfile.peek() != EOF)
+        if (content[i] == '\n')
         {
-            getline(mfile, line);
             count++;
         }
-        mfile.close();
-        cout << "Number of lines in the file are: " << count << endl;
+        ++i;
     }
-    else
-        cout << "Couldn't open the file\n";
+    cout << "\nThere are " << count << " line in the given file";
 }
 
 void find_word()
 {
-    string word;
-    string word2;
-    ifstream findw(fileName);
-    string a;
-    cout << "enter word \n";
+    int count = 0;
+    vector<string> splited_words;
+    string store_str, word;
+    char lowerStr[2000];
+    bool check = false;
+
+    cout << "Please Enter a Word: ";
     cin >> word;
-    bool ans = false;
-    if (findw.is_open())
+    word = toLower(word);
+
+    for (int i = 0; i < content.length(); i++)
     {
-
-        while (findw >> word2)
-        {
-            if (word2 == word)
-            {
-
-                cout << "Yes word is find :)\n \n";
-                ans=true;
-                break;
-            }
-        }
-        findw.close();
+        lowerStr[i] = tolower(content[i]);
     }
-    else
-        cout << "Unable to open file";
 
-    if (!ans)
-        cout << " Sorry word not find :( " << endl;
+    for (int i = 0; i < content.length(); i++)
+    {
+        if (lowerStr[i] != ' ' && lowerStr[i] != '\n')
+        {
+            store_str += lowerStr[i];
+        }
+        else
+        {
+            splited_words.push_back(store_str);
+            store_str = "";
+        }
+    }
+    splited_words.push_back(store_str);
+
+    for (int i = 0; i < splited_words.size(); i++)
+    {
+        if (word == splited_words[i])
+        {
+            check = true;
+            break;
+        }
+    }
+    if (check == true)
+    {
+        cout << "word was found :D" << endl;
+    }
+    if (check == false)
+    {
+        cout << "word wasn't found;(" << endl;
+    }
 }
 
 void n_WordExist()
@@ -313,7 +313,7 @@ void n_WordExist()
     }
     splited_words.push_back(store_str);
 
-    for (int i = 0; i < content.length(); i++)
+    for (int i = 0; i < splited_words.size(); i++)
     {
         if (word == splited_words[i])
         {
@@ -322,7 +322,6 @@ void n_WordExist()
     }
     cout << "The word \"" << word << "\" was found " << count << " times" << endl;
 }
-
 string toLower(string str)
 {
     for (int i = 0; i < str.length(); i++)
