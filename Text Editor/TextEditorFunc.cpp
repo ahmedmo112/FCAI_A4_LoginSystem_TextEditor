@@ -117,7 +117,7 @@ void addingContent()
     cout << "Enter the text you want to append: ";
     cin.ignore();
     cin.getline(text, 10000, char(26));
-    if (!(content == ""))
+    if (content != "")
     {
         content += "\n";
     }
@@ -197,7 +197,7 @@ void count_words()
 {
 
     unsigned count = 0;
-    int state = 0, i, out = 0, in = 1;
+    int state = 0, i = 0, out = 0, in = 1;
 
     while (content[i] != '\0')
     {
