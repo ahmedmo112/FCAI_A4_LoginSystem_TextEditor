@@ -35,24 +35,25 @@ int menu()
     }
 }
 
-void extractFileData()
+void extractFileData() // Function to extract the data from file
 {
     fstream file;
     char ch[400];
-    file.open("data.txt", ios::in);
-    file.getline(ch, 400);
-    while (!file.eof())
+    file.open("data.txt", ios::in); //open file at input mode
+    file.getline(ch, 400); // get each line and add it to  array of char
+    while (!file.eof()) // get lines till reach the End Of File
     {
-        int id = stoi(ch);
-        users[id].userId = id;
+        //we read depends on file format
+        int id = stoi(ch); //convert id to int
+        users[id].userId = id; //add the id to the map of struct with id as key 
+        file.getline(ch, 400); 
+        users[id].userName = ch; //add the name to the map of struct with id as key 
         file.getline(ch, 400);
-        users[id].userName = ch;
+        users[id].email = ch; //add the email to the map of struct with id as key 
         file.getline(ch, 400);
-        users[id].email = ch;
+        users[id].password = ch;//add the password to the map of struct with id as key 
         file.getline(ch, 400);
-        users[id].password = ch;
-        file.getline(ch, 400);
-        users[id].phoneNumber = ch;
+        users[id].phoneNumber = ch; //add the phone number to the map of struct with id as key 
         file.getline(ch, 400);
         file.getline(ch, 400);
     }
@@ -263,26 +264,27 @@ void phoneNumber()
     }
 }
 
+//Function to assign the user input data to map of struct with id as key
 void assign_to_map()
 {
-    users[user.userId].userId = user.userId;
-    users[user.userId].userName = user.userName;
-    users[user.userId].email = user.email;
-    users[user.userId].password = encrypt(user.password);
-    users[user.userId].phoneNumber = user.phoneNumber;
+    users[user.userId].userId = user.userId; //add the id to the map of struct with id as key 
+    users[user.userId].userName = user.userName; //add the user name to the map of struct with id as key 
+    users[user.userId].email = user.email; //add the email to the map of struct with id as key 
+    users[user.userId].password = encrypt(user.password); //add the encrypted password to the map of struct with id as key 
+    users[user.userId].phoneNumber = user.phoneNumber; //add the phonenumber to the map of struct with id as key 
 }
 
-void store_data()
+void store_data() // function to store each elament at the map to file
 {
     fstream file;
-    file.open("data.txt", ios::out);
-    for (auto i : users)
+    file.open("data.txt", ios::out); // open file at input mode
+    for (auto i : users) //loops on each elament at map
     {
-        file << i.second.userId << endl;
-        file << i.second.userName << endl;
-        file << i.second.email << endl;
-        file << i.second.password << endl;
-        file << i.second.phoneNumber << endl;
+        file << i.second.userId << endl; // write at first line the user id from map by key value
+        file << i.second.userName << endl; // write at first line the user name from map by key value
+        file << i.second.email << endl; // write at first line the user email from map by key value
+        file << i.second.password << endl; // write at first line the user password from map by key value
+        file << i.second.phoneNumber << endl; // write at first line the user phonenumber from map by key value
         file << endl;
     }
     file.close();
@@ -299,49 +301,42 @@ void reg()
     store_data();
 }
 
-bool isRegID(int id)
+bool isRegID(int id) // function chackes if the id is Registered before
 {
-    if (users[id].userId == 0)
+    if (users[id].userId == 0) //chack the id of the input id is 0 or some thing else
     {
-        return false;
+        return false; // return false if dosen't exist 
     }
-    return true;
+    return true; // return true if exist
 }
 
-string pass;
 
-void login()
+void login() //Function to Login 
 {
     int id, trials = 4;
     // string password;
-    while (trials != 0)
+    while (trials != 0) // loop while the trials equal to 0
     {
         cout << "Enter your ID: ";
-        cin >> user.userId;
+        cin >> user.userId; // get from user id 
         cout << "Enter your password : ";
-        coverpassword();
+        coverpassword(); // get from user password 
         cout << endl;
-        user.password = passwd;
-        pass = passwd;
-        cout << "var: " << passwd << endl;
-        // user.oldPassword =str;
-        user.password = encrypt(passwd);
-        // TODO: replace password with *****
-        // TODO: decrypt password from data to compare
+        user.password = encrypt(passwd); // assign encrypted passwd to the user password from struct 
+        // compare the encrypted stored password with the input password  and chack the id is exist
         if (users[user.userId].password == user.password && isRegID(user.userId))
         {
-            cout << "Successful login, welcome " << users[user.userId].userName << endl;
-            cout << "TEST: Password *after decryption* " << decrypt(user.password) << endl; // Testing decryption##############
+            cout << "Successful login, welcome " << users[user.userId].userName << endl; 
             break;
         }
-        else
+        else 
         {
             cout << "Failed login. Try again." << endl;
-            trials--;
-            if (trials < 4)
+            trials--;  // decreasing the trials by one 
+            if (trials < 4) // if trials less than 4
             {
-                cout << "You have " << trials << " trials\n";
-                if (trials == 0)
+                cout << "You have " << trials << " trials\n"; // desplay the trials left
+                if (trials == 0) // if trials reach 0 denied access to the system
                 {
                     cout << "You have denied access to the system!!!\n";
                     break;
@@ -380,54 +375,50 @@ string decrypt(string e_password)
     return originalPassword;
 }
 
-void checkTheOldPass()
+void checkTheOldPass() // function to chacking the old pass is true 
 {
-    cout << user.userId << endl;
     cout << "Please Enter The Old Password: ";
     while (true)
     {
-        coverpassword();
-        if (decrypt(users[user.userId].password) == passwd)
+        coverpassword(); // take from user the old password coverd with stras
+        if (decrypt(users[user.userId].password) == passwd) // compare the stored password with the input password
         {
-            break;
+            break; // if ture break
         }
         cout << "Error, Please Re-Enter The Old Password: ";
     }
 }
 
-void newPass()
+void newPass() // Function take the new password
 {
-    // passwd = "";
-    // cin.ignore();
     do
     {
+        //display the rules
         cout << "\nmake sure that : \n 1- including letters, numbers, and upper and lower case \n 2- never use less than 8 characters\n ";
         cout << "Please Enter The New Password: ";
-        coverpassword();
-        // StrongNess(passwd);
-    } while (!(StrongNess(passwd)));
-    // string passwd2;
+        coverpassword(); // take from user the old password coverd with stras
+    } while (!(StrongNess(passwd))); //loop till the password become strong 
     cout << "Please Enter The New Password Again: ";
-    repeat_password();
-    if (passwd2 != passwd)
+    repeat_password(); // take from user the old password coverd with stras again
+    if (passwd2 != passwd) //compare two passwords
     {
         cout << "The Passwords doesn't match Please enter it again...\n";
-        newPass();
+        newPass(); // is doesn't equal call the function newPass again
     }
 }
 
-void storeAndChangePass()
+void storeAndChangePass() // Function for Storing the new password  
 {
-    users[user.userId].password = encrypt(passwd);
+    users[user.userId].password = encrypt(passwd); //assing to the passord value of id key the encrypted password
 }
 
-void changePassword()
+void changePassword() // The main function to change password
 {
     cout << "Please Login First...\n";
-    login();
-    checkTheOldPass();
-    newPass();
-    storeAndChangePass();
+    login(); // Login first
+    checkTheOldPass(); // take the old password and chack is true 
+    newPass(); // take the new password
+    storeAndChangePass(); // saving the new password
     cout << "Password Changed Successfully\n\n";
-    store_data();
+    store_data(); //save data to file 
 }
