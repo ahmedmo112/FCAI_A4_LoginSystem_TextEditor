@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->setFixedSize(800,600);
     ui->lineEdit->hide();
     ui->find_btn->hide();
     ui->find_btn_2->hide();

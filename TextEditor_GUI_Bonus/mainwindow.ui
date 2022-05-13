@@ -13,9 +13,25 @@
   <property name="windowTitle">
    <string>Text Editor</string>
   </property>
+  <property name="statusTip">
+   <string notr="true"/>
+  </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(196, 192, 158);
-border-radius: 7px;</string>
+   <string notr="true">MainWindow{
+background-image: url(&quot;../TextEditor_GUI_Bonus/te.png&quot;);
+
+}
+
+QPushButton{
+font: 700 10pt &quot;Georgia&quot;;
+color: rgb(227, 226, 219);
+border: 0px solid black;
+background-color: rgb(46, 82, 102);
+border-radius: 7px;
+}</string>
+  </property>
+  <property name="animated">
+   <bool>true</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTextEdit" name="textEdit">
@@ -30,9 +46,9 @@ border-radius: 7px;</string>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);
-border-top: 0.5px solid black;
-border-right: 0.5px solid black;
-border-left: 0.5px solid black;</string>
+border: 0.5px solid black;
+border-radius: 7px;
+</string>
     </property>
    </widget>
    <widget class="QPushButton" name="addcontent_btn">
@@ -48,12 +64,23 @@ border-left: 0.5px solid black;</string>
      <string notr="true">QPushButton{
 font: 700 10pt &quot;Georgia&quot;;
 color: rgb(211, 208, 203);
+border: 0px solid black;
 background-color: rgb(46, 82, 102);
+border-radius: 7px;
 }
 </string>
     </property>
     <property name="text">
      <string>Add Content</string>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="erase_btn">
@@ -69,12 +96,22 @@ background-color: rgb(46, 82, 102);
      <string notr="true">QPushButton{
 font: 700 10pt &quot;Georgia&quot;;
 color: rgb(211, 208, 203);
+border: 0px solid black;
 background-color: rgb(46, 82, 102);
-}
-</string>
+border-radius: 7px;
+}</string>
     </property>
     <property name="text">
      <string>Erase Content</string>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="encrypt_btn">
@@ -97,6 +134,15 @@ background-color: rgb(46, 82, 102);
     <property name="text">
      <string>Encrypt Content</string>
     </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="decrypt_btn">
     <property name="geometry">
@@ -118,6 +164,15 @@ background-color: rgb(46, 82, 102);
     <property name="text">
      <string>Decrypt Content</string>
     </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="findword_btn">
     <property name="geometry">
@@ -132,12 +187,23 @@ background-color: rgb(46, 82, 102);
      <string notr="true">QPushButton{
 font: 700 10pt &quot;Georgia&quot;;
 color: rgb(211, 208, 203);
+border: 0px solid black;
 background-color: rgb(46, 82, 102);
+border-radius: 7px;
 }
 </string>
     </property>
     <property name="text">
      <string>Find Word</string>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="merge_btn">
@@ -160,6 +226,15 @@ background-color: rgb(46, 82, 102);
     <property name="text">
      <string>Merge Content</string>
     </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="save_btn">
     <property name="geometry">
@@ -180,6 +255,15 @@ background-color: rgb(46, 82, 102);
     </property>
     <property name="text">
      <string>Save</string>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="lowercase_btn">
@@ -202,6 +286,15 @@ background-color: rgb(46, 82, 102);
     <property name="text">
      <string>Lower Case</string>
     </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="uppercase_btn">
     <property name="geometry">
@@ -222,6 +315,15 @@ background-color: rgb(46, 82, 102);
     </property>
     <property name="text">
      <string>Upper Case</string>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="cap_btn">
@@ -244,6 +346,15 @@ background-color: rgb(46, 82, 102);
     <property name="text">
      <string>Capitalize</string>
     </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="repeatedword_btn">
     <property name="geometry">
@@ -265,12 +376,21 @@ background-color: rgb(46, 82, 102);
     <property name="text">
      <string>No. Repeated Word</string>
     </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QLabel" name="lines">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>473</y>
+      <y>475</y>
       <width>31</width>
       <height>20</height>
      </rect>
@@ -289,7 +409,7 @@ background-color: rgb(46, 82, 102);
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>473</y>
+      <y>475</y>
       <width>63</width>
       <height>20</height>
      </rect>
@@ -305,7 +425,7 @@ background-color: rgb(46, 82, 102);
     <property name="geometry">
      <rect>
       <x>140</x>
-      <y>473</y>
+      <y>475</y>
       <width>63</width>
       <height>20</height>
      </rect>
@@ -321,7 +441,7 @@ background-color: rgb(46, 82, 102);
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>473</y>
+      <y>475</y>
       <width>31</width>
       <height>20</height>
      </rect>
@@ -340,7 +460,7 @@ background-color: rgb(46, 82, 102);
     <property name="geometry">
      <rect>
       <x>200</x>
-      <y>473</y>
+      <y>475</y>
       <width>41</width>
       <height>20</height>
      </rect>
@@ -359,7 +479,7 @@ background-color: rgb(46, 82, 102);
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>473</y>
+      <y>475</y>
       <width>71</width>
       <height>20</height>
      </rect>
@@ -377,15 +497,14 @@ background-color: rgb(46, 82, 102);
       <x>10</x>
       <y>473</y>
       <width>541</width>
-      <height>21</height>
+      <height>23</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">QWidget{
 background-color: rgb(255, 255, 255);
-border-bottom: 0.5px solid black;
-border-right: 0.5px solid black;
-border-left: 0.5px solid black;
+border: 0.5px solid black;
+border-radius: 7px;
 }
 </string>
     </property>
@@ -433,6 +552,12 @@ background-color: rgb(46, 82, 102);
       <height>600</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QFrame{
+background-color: rgb(255, 255, 255);
+background-image: url(&quot;../TextEditor_GUI_Bonus/te.png&quot;);
+}</string>
+    </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
     </property>
@@ -449,7 +574,11 @@ background-color: rgb(46, 82, 102);
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(196, 192, 158);</string>
+      <string notr="true">
+
+
+
+</string>
      </property>
      <widget class="QLabel" name="label_7">
       <property name="geometry">
@@ -658,7 +787,7 @@ background-color: rgb(46, 82, 102);
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
