@@ -86,29 +86,30 @@ int displayMenu()
     }
 }
 
-void loadFile()
+void loadFile() // Function for load data from file
 {
     cout << "Please Enter Your File Name: ";
-    cin >> fileName;
-    file.open(fileName, ios::in);
-    if (file.fail())
+    cin >> fileName; // take file name from user
+    file.open(fileName, ios::in); // opem file at read mode 
+    if (file.fail()) // check if file  exist 
     {
-        file.open(fileName, ios::out);
+        file.open(fileName, ios::out); //open new file at write mode to create it if the file doesn't exist 
         cout << "This is a new file. I created it for you \n";
     }
     else
     {
+        //if file exist
         cout << "This File Already Exists\n";
         char ch;
-        file.get(ch);
+        file.get(ch); // get every char from file till End Of File
         while (!file.eof())
         {
-            content += ch;
+            content += ch; //add charachter to string names content 
             file.get(ch);
         }
     }
 
-    file.close();
+    file.close(); //close file
 }
 
 void addingContent()
@@ -117,7 +118,7 @@ void addingContent()
     cout << "Enter the text you want to append: ";
     cin.ignore();
     cin.getline(text, 10000, char(26));
-    if (!(content == ""))
+    if (content != "")
     {
         content += "\n";
     }
@@ -197,7 +198,7 @@ void count_words()
 {
 
     unsigned count = 0;
-    int state = 0, i, out = 0, in = 1;
+    int state = 0, i = 0, out = 0, in = 1;
 
     while (content[i] != '\0')
     {
@@ -244,7 +245,7 @@ void find_word()
 
     cout << "Please Enter a Word: ";
     cin >> word;
-    word = toLower(word);
+    word = stringToLower(word);
 
     for (int i = 0; i < content.length(); i++)
     {
@@ -283,105 +284,105 @@ void find_word()
     }
 }
 
-void n_WordExist()
+void n_WordExist() // Function get the number of word repeated in file
 {
     int count = 0;
-    vector<string> splited_words;
+    vector<string> splited_words; //vector to split each word
     string store_str, word;
-    char lowerStr[2000];
+    string lowerStr;
 
     cout << "Please Enter a Word: ";
-    cin >> word;
-    word = toLower(word);
+    cin >> word; // take word from user 
 
-    for (int i = 0; i < content.length(); i++)
-    {
-        lowerStr[i] = tolower(content[i]);
-    }
+    word = stringToLower(word); //convert it to lower case by caling function stringToLower()
+    lowerStr = stringToLower(content); //convert content to lower case and assign it to lowerStr string 
 
-    for (int i = 0; i < content.length(); i++)
+    for (int i = 0; i < content.length(); i++) //loop from 0 to length of content for looping  on each char 
     {
-        if (lowerStr[i] != ' ' && lowerStr[i] != '\n')
+        if (lowerStr[i] != ' ' && lowerStr[i] != '\n') //check the char is not equal space or new line
         {
-            store_str += lowerStr[i];
+            store_str += lowerStr[i]; //add the char to string names store_str
         }
         else
         {
-            splited_words.push_back(store_str);
-            store_str = "";
+            splited_words.push_back(store_str); // add the string store_str to vector 
+            store_str = ""; //set store_str to Empty string
         }
     }
-    splited_words.push_back(store_str);
+    splited_words.push_back(store_str); // push back last word
 
-    for (int i = 0; i < splited_words.size(); i++)
+    for (int i = 0; i < splited_words.size(); i++) // loop from 0 to vector size to get each one 
     {
-        if (word == splited_words[i])
+        if (word == splited_words[i]) // compare the ward with each word of vector
         {
-            count++;
+            count++; // increament the count by 1
         }
     }
     cout << "The word \"" << word << "\" was found " << count << " times" << endl;
 }
-string toLower(string str)
+string stringToLower(string str) // Function to convert string to lower case 
 {
-    for (int i = 0; i < str.length(); i++)
+    for (int i = 0; i < str.length(); i++) // loop from 0 to the str length 
     {
-        str[i] = tolower(str[i]);
+        str[i] = tolower(str[i]); //convert each char to lowercase
     }
-    return str;
+    return str; //return string 
 }
 
-void contentToUpper()
+void contentToUpper() //function to convert the content of file to uppercase
 {
-    for (int i = 0; i < content.length(); i++)
+    for (int i = 0; i < content.length(); i++) // loop from 0 to the content length
     {
-        content[i] = toupper(content[i]);
+        content[i] = toupper(content[i]);  //convert each char to uppercase
     }
 }
 
-void contentToLower()
+void contentToLower() //function to convert the content of file to lower case
 {
-    content = toLower(content);
+    content = stringToLower(content); // set the content with return value of function StringToLower()
 }
 
-void firstCap()
+//function to convert the first char of the word to uppercase
+// and the other alphapet of the word to Lowercase
+void firstCap() 
 {
-    for (int i = 0; i < content.length(); i++)
+    for (int i = 0; i < content.length(); i++) // loop from 0 to the content length
     {
+        //chack if the previous char is space or newline or is the first index 0
         if (content[i - 1] == ' ' || content[i - 1] == '\n' || i == 0)
         {
-            content[i] = toupper(content[i]);
+            content[i] = toupper(content[i]); //convert char to upper case 
         }
         else
         {
-            content[i] = tolower(content[i]);
+            content[i] = tolower(content[i]); //convert char to lower case
         }
     }
 }
 
-void saveFile()
+void saveFile() // Function for save the file
 {
     int choice;
     cout << "For Save The File with The Same File Name Enter 1 \nOr Under a Different Name Enter 2: ";
-    cin >> choice;
-    if (choice == 1)
+    cin >> choice; // take the user choice
+    if (choice == 1) // if choose 1 mean he want to save with the same name
     {
-        file.open(fileName, ios::out);
-        for (int i = 0; i < content.length(); i++)
+        file.open(fileName, ios::out); // open file at output mode 
+        for (int i = 0; i < content.length(); i++) // loop from 0 to the content length
         {
-            file << content[i];
+            file << content[i]; // write each char to the file
         }
         file.close();
     }
-    else if (choice == 2)
+    else if (choice == 2) // if choose 2 mean he want to save with the different name 
     {
         char diff_fileName[100];
         cout << "Please Enter The new file name (end with .txt): ";
-        cin >> diff_fileName;
-        file.open(diff_fileName, ios::out);
-        for (int i = 0; i < content.length(); i++)
+        cin >> diff_fileName; //take from user the new file name 
+        file.open(diff_fileName, ios::out); // open file at output mode 
+        for (int i = 0; i < content.length(); i++) // loop from 0 to the content length
         {
-            file << content[i];
+            file << content[i]; // write each char to the file
         }
         file.close();
     }
