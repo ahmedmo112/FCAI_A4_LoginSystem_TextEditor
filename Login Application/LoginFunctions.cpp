@@ -117,31 +117,6 @@ void email()
     }
 }
 
-string passwd2;
-void repeat_password()
-{
-    int chh;
-    while (chh = getch())
-    {
-        if (chh == 13)
-        {
-            break;
-        }
-        else if (chh == 8)
-        {
-            if (passwd2.length() > 0)
-            {
-                cout << "\b \b";
-                passwd2.erase(passwd2.length() - 1);
-            }
-        }
-        else
-        {
-            cout << "*";
-            passwd2 += chh;
-        }
-    }
-}
 
 string passwd;
 void coverpassword()
@@ -166,6 +141,32 @@ void coverpassword()
         {
             cout << "*";
             passwd += ch;
+        }
+    }
+}
+
+string passwd2;
+void repeat_password()
+{
+    int chh;
+    while (chh = getch())
+    {
+        if (chh == 13)
+        {
+            break;
+        }
+        else if (chh == 8)
+        {
+            if (passwd2.length() > 0)
+            {
+                cout << "\b \b";
+                passwd2.erase(passwd2.length() - 1);
+            }
+        }
+        else
+        {
+            cout << "*";
+            passwd2 += chh;
         }
     }
 }
