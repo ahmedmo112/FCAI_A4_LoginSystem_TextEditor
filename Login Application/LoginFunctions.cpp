@@ -45,37 +45,46 @@ void extractFileData() // Function to extract the data from file
     {
         //we read depends on file format
         int id = stoi(ch); //convert id to int
-        users[id].userId = id; //add the id to the map of struct with id as key 
+        map_users[id].userId = id; //add the id to the map of struct with id as key 
         file.getline(ch, 400); 
-        users[id].userName = ch; //add the name to the map of struct with id as key 
+        map_users[id].userName = ch; //add the name to the map of struct with id as key 
         file.getline(ch, 400);
-        users[id].email = ch; //add the email to the map of struct with id as key 
+        map_users[id].email = ch; //add the email to the map of struct with id as key 
         file.getline(ch, 400);
-        users[id].password = ch;//add the password to the map of struct with id as key 
+        map_users[id].password = ch;//add the password to the map of struct with id as key 
         file.getline(ch, 400);
-        users[id].phoneNumber = ch; //add the phone number to the map of struct with id as key 
+        map_users[id].phoneNumber = ch; //add the phone number to the map of struct with id as key 
         file.getline(ch, 400);
         file.getline(ch, 400);
     }
     file.close();
 }
 
-bool is_valid_name(string str3)
+bool isValidName(string str3)
 {
     regex valid_name("[a-zA-Z_]+");
     return regex_match(str3, valid_name);
 }
 
-bool is_valid_email(string str)
+bool isValidEmail(string str)
 {
     regex valid_email("[^.]([a-zA-Z0-9#!%$‘&+*–/=?^_`{|}~][.]?)+@[a-zA-Z]+(.com)");
     // regex valid_email("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
     return regex_match(str, valid_email);
 }
-bool is_valid_phoneNumber(string str2)
+bool isValidPhoneNumber(string str2)
 {
     regex valid_PN("(01)(0|1|2|5)[0-9]+");
     return regex_match(str2, valid_PN);
+}
+
+bool isRegID(int id) // function chackes if the id is Registered before
+{
+    if (map_users[id].userId == 0) //chack the id of the input id is 0 or some thing else
+    {
+        return false; // return false if dosen't exist 
+    }
+    return true; // return true if exist
 }
 
 void userId()
@@ -94,7 +103,7 @@ void userName()
 {
     cout << "Please enter your name: ";
     cin >> user.userName;
-    while (!(is_valid_name(user.userName)))
+    while (!(isValidName(user.userName)))
     {
         cout << "you entered name with incorrect format, please enter correct name: ";
         cin >> user.userName;
@@ -106,20 +115,20 @@ void email()
     cout << "Please enter your email: ";
     cin >> user.email;
 
-    for (auto j = users.begin(); j != users.end(); ++j)
+    for (auto j = map_users.begin(); j != map_users.end(); ++j)
     {
-        while ((!(is_valid_email(user.email))) || (user.email == j->second.email))
+        while ((!(isValidEmail(user.email))) || (user.email == j->second.email))
         {
             cout << "you can't use this entered email, please enter another email: ";
             cin >> user.email;
-            j = users.begin();
+            j = map_users.begin();
         }
     }
 }
 
 
 string passwd;
-void coverpassword()
+void coverPassword()
 {
     int ch = 0;
     passwd = "";
@@ -146,7 +155,7 @@ void coverpassword()
 }
 
 string passwd2;
-void repeat_password()
+void repeatPassword()
 {
     int chh;
     while (chh = getch())
@@ -171,7 +180,7 @@ void repeat_password()
     }
 }
 
-void compares_passwords()
+void comparesPasswords()
 {
     int pass = 3;
     while (pass > 0)
@@ -181,7 +190,7 @@ void compares_passwords()
             passwd2 = "";
             cout << endl;
             cout << "passwords are not the same \n please enter it again : ";
-            repeat_password();
+            repeatPassword();
             pass -= 1;
         }
         else
@@ -191,7 +200,7 @@ void compares_passwords()
     }
 }
 
-bool StrongNess(string &input)
+bool strongNess(string &input)
 {
     int n = input.length();
 
@@ -244,21 +253,21 @@ void password()
     {
         cout << "\nmake sure that : \n 1- including letters, numbers, and upper and lower case \n 2- never use less than 8 characters\n ";
         cout << "Please enter your password: ";
-        coverpassword();
-        // StrongNess(passwd);
-    } while (!(StrongNess(passwd)));
+        coverPassword();
+        // strongNess(passwd);
+    } while (!(strongNess(passwd)));
     cout << endl;
     cout << "repeat password : ";
-    repeat_password();
+    repeatPassword();
     cout << endl;
-    compares_passwords();
+    comparesPasswords();
     user.password = passwd;
 }
 void phoneNumber()
 {
     cout << "Please enter your phone number: ";
     cin >> user.phoneNumber;
-    while ((!(is_valid_phoneNumber(user.phoneNumber))) || (user.phoneNumber.length() != 11))
+    while ((!(isValidPhoneNumber(user.phoneNumber))) || (user.phoneNumber.length() != 11))
     {
         cout << "you entered phone number with incorrect format, please enter correct phone number: ";
         cin >> user.phoneNumber;
@@ -266,20 +275,20 @@ void phoneNumber()
 }
 
 //Function to assign the user input data to map of struct with id as key
-void assign_to_map()
+void assignToMap()
 {
-    users[user.userId].userId = user.userId; //add the id to the map of struct with id as key 
-    users[user.userId].userName = user.userName; //add the user name to the map of struct with id as key 
-    users[user.userId].email = user.email; //add the email to the map of struct with id as key 
-    users[user.userId].password = encrypt(user.password); //add the encrypted password to the map of struct with id as key 
-    users[user.userId].phoneNumber = user.phoneNumber; //add the phonenumber to the map of struct with id as key 
+    map_users[user.userId].userId = user.userId; //add the id to the map of struct with id as key 
+    map_users[user.userId].userName = user.userName; //add the user name to the map of struct with id as key 
+    map_users[user.userId].email = user.email; //add the email to the map of struct with id as key 
+    map_users[user.userId].password = encrypt(user.password); //add the encrypted password to the map of struct with id as key 
+    map_users[user.userId].phoneNumber = user.phoneNumber; //add the phonenumber to the map of struct with id as key 
 }
 
-void store_data() // function to store each elament at the map to file
+void storeData() // function to store each elament at the map to file
 {
     fstream file;
     file.open("data.txt", ios::out); // open file at input mode
-    for (auto i : users) //loops on each elament at map
+    for (auto i : map_users) //loops on each elament at map
     {
         file << i.second.userId << endl; // write at first line the user id from map by key value
         file << i.second.userName << endl; // write at first line the user name from map by key value
@@ -298,19 +307,9 @@ void reg()
     email();
     password();
     phoneNumber();
-    assign_to_map();
-    store_data();
+    assignToMap();
+    storeData();
 }
-
-bool isRegID(int id) // function chackes if the id is Registered before
-{
-    if (users[id].userId == 0) //chack the id of the input id is 0 or some thing else
-    {
-        return false; // return false if dosen't exist 
-    }
-    return true; // return true if exist
-}
-
 
 void login() //Function to Login 
 {
@@ -321,13 +320,13 @@ void login() //Function to Login
         cout << "Enter your ID: ";
         cin >> user.userId; // get from user id 
         cout << "Enter your password : ";
-        coverpassword(); // get from user password 
+        coverPassword(); // get from user password 
         cout << endl;
         user.password = encrypt(passwd); // assign encrypted passwd to the user password from struct 
         // compare the encrypted stored password with the input password  and chack the id is exist
-        if (users[user.userId].password == user.password && isRegID(user.userId))
+        if (map_users[user.userId].password == user.password && isRegID(user.userId))
         {
-            cout << "Successful login, welcome " << users[user.userId].userName << endl; 
+            cout << "Successful login, welcome " << map_users[user.userId].userName << endl; 
             break;
         }
         else 
@@ -381,8 +380,8 @@ void checkTheOldPass() // function to chacking the old pass is true
     cout << "Please Enter The Old Password: ";
     while (true)
     {
-        coverpassword(); // take from user the old password coverd with stras
-        if (decrypt(users[user.userId].password) == passwd) // compare the stored password with the input password
+        coverPassword(); // take from user the old password coverd with stras
+        if (decrypt(map_users[user.userId].password) == passwd) // compare the stored password with the input password
         {
             break; // if ture break
         }
@@ -397,10 +396,10 @@ void newPass() // Function take the new password
         //display the rules
         cout << "\nmake sure that : \n 1- including letters, numbers, and upper and lower case \n 2- never use less than 8 characters\n ";
         cout << "Please Enter The New Password: ";
-        coverpassword(); // take from user the old password coverd with stras
-    } while (!(StrongNess(passwd))); //loop till the password become strong 
+        coverPassword(); // take from user the old password coverd with stras
+    } while (!(strongNess(passwd))); //loop till the password become strong 
     cout << "Please Enter The New Password Again: ";
-    repeat_password(); // take from user the old password coverd with stras again
+    repeatPassword(); // take from user the old password coverd with stras again
     if (passwd2 != passwd) //compare two passwords
     {
         cout << "The Passwords doesn't match Please enter it again...\n";
@@ -410,7 +409,7 @@ void newPass() // Function take the new password
 
 void storeAndChangePass() // Function for Storing the new password  
 {
-    users[user.userId].password = encrypt(passwd); //assing to the passord value of id key the encrypted password
+    map_users[user.userId].password = encrypt(passwd); //assing to the passord value of id key the encrypted password
 }
 
 void changePassword() // The main function to change password
@@ -421,5 +420,5 @@ void changePassword() // The main function to change password
     newPass(); // take the new password
     storeAndChangePass(); // saving the new password
     cout << "Password Changed Successfully\n\n";
-    store_data(); //save data to file 
+    storeData(); //save data to file 
 }

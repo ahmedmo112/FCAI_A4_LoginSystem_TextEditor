@@ -41,19 +41,19 @@ int displayMenu()
         }
         else if (choice == 7)
         {
-            count_words();
+            countWords();
         }
         else if (choice == 8)
         {
-            count_characters();
+            countCharacters();
         }
         else if (choice == 9)
         {
-            count_lines();
+            countLines();
         }
         else if (choice == 10)
         {
-            find_word();
+            findWord();
         }
         else if (choice == 11)
         {
@@ -194,7 +194,7 @@ void merge()
     }
 }
 
-void count_words()
+void countWords()
 {
 
     unsigned count = 0;
@@ -215,12 +215,12 @@ void count_words()
     cout << "\nThere are " << count << " word in the given file";
 }
 
-void count_characters()
+void countCharacters()
 {
     cout << "number of characters is : " << content.length() << endl;
 }
 
-void count_lines()
+void countLines()
 {
 
     int count = 1, i = 0;
@@ -235,7 +235,16 @@ void count_lines()
     cout << "\nThere are " << count << " line in the given file";
 }
 
-void find_word()
+string stringToLower(string str) // Function to convert string to lower case 
+{
+    for (int i = 0; i < str.length(); i++) // loop from 0 to the str length 
+    {
+        str[i] = tolower(str[i]); //convert each char to lowercase
+    }
+    return str; //return string 
+}
+
+void findWord()
 {
     int count = 0;
     vector<string> splited_words;
@@ -319,14 +328,6 @@ void n_WordExist() // Function get the number of word repeated in file
         }
     }
     cout << "The word \"" << word << "\" was found " << count << " times" << endl;
-}
-string stringToLower(string str) // Function to convert string to lower case 
-{
-    for (int i = 0; i < str.length(); i++) // loop from 0 to the str length 
-    {
-        str[i] = tolower(str[i]); //convert each char to lowercase
-    }
-    return str; //return string 
 }
 
 void contentToUpper() //function to convert the content of file to uppercase

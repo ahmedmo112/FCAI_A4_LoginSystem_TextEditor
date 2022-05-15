@@ -23,31 +23,31 @@ struct Users
 
 } user;
 
-map<int, Users> users;
+map<int, Users> map_users;
 
 int menu();
 void extractFileData();
-bool is_valid_name();
-bool is_valid_email();
-bool is_valid_phoneNumber();
+bool isValidName();
+bool isValidEmail();
+bool isValidPhoneNumber();
+bool isRegID(int id);
 void userId();
 void userName();
 void email();
-void repeat_email();
-void password();
-void coverpassword();
-void compares_passwords();
+void repeatPassword();
+void coverPassword();
+void comparesPasswords();
 bool StrongNess(string &input);
+void password();
 void phoneNumber();
-void assign_to_map();
-void store_data();
+void assignToMap();
+void storeData();
 void reg();
-bool isRegID(int id);
 void login();
-void newPass();
 string encrypt(string password);
 string decrypt(string e_password);
 void checkTheOldPass();
+void newPass();
 void storeAndChangePass();
 void changePassword();
 
