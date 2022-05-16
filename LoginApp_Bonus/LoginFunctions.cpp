@@ -1,4 +1,4 @@
-/*#include "LoginFunctions.h"
+#include "LoginFunctions.h"
 #include "OTP.cpp"
 
 #define getch() _getch;
@@ -317,7 +317,7 @@ void sendOTP()
 {
     int code = rand() % 9000 + 1000;
     cout << code;
-    OTP(code, map_users[user.userId].email);
+    requestOTP(code, map_users[user.userId].email);
     cout << "Your OTP has been sent to your email, please check your email\nEnter OTP Code: ";
     int checkOTP;
     cin >> checkOTP;
@@ -460,4 +460,4 @@ void changePassword() // The main function to change password
     storeAndChangePass(); // saving the new password
     cout << "Password Changed Successfully\n\n";
     storeData(); //save data to file 
-}*/
+}
