@@ -181,23 +181,26 @@ void decryptContent()
 
 void merge()
 {
+// initialize file “fstream” to merge , array of the name of the file , character
     fstream file2;
     char name[80];
     char ch;
-    cout << "Enter file name: ";
-    cin >> name;
-    file2.open(name); // open the second file to merge
+    cout << "Enter file name\n";
+    cin >> name;//ask user to input file name want to merge
+
+    //open file and check if available  output invalid if not available 
+    file2.open(name);
     if (file2.fail())
     {
         cout << "Invalid File Name" << endl;
     }
     else
     {
-        file2.get(ch);
+        file2.get(ch);//built in function get characters from the file and add it to the main file “content” and do it while file not end
         content += '\n';
         while (!file2.eof())
         {
-            content += ch;// add each character from second file to the first file
+            content += ch;
             file2.get(ch);
         }
         file2.close();
@@ -208,9 +211,9 @@ void countWords()
 {
 
     unsigned count = 0;
-    int state = 0, i = 0, out = 0, in = 1;
+    int state = 0, i = 0, out = 0, in = 1;//initialize int (count , I , in , out , state)
 
-    while (content[i] != '\0') // (\0) is the NULL character it has the value zero
+    while (content[i] != '\0')//:  “ \0” = null means to the end of string do a while loop which on every character on main file to the end of file
     {
         if (content[i] == ' ' || content[i] == '\n' || content[i] == '\t')
             state = out;
@@ -222,27 +225,27 @@ void countWords()
 
         ++i;
     }
-    cout << "\nThere are " << count << " word in the given file\n";
+    cout << "\nThere are " << count << " word in the given file";
 }
 
 void countCharacters()
 {
-    cout << "number of characters is : " << content.length() << endl;
+    cout << "number of characters is : " << content.length() << endl;// after search google I found that ( space and new line are characters) get length of the file and out put number of the character is “length”
+
 }
 
 void countLines()
 {
-
     int count = 1, i = 0;
-    while (content[i] != '\0')// (\0) is the NULL character it has the value zero
+    while (content[i] != '\0')//while the end of string
     {
-        if (content[i] == '\n')
+        if (content[i] == '\n')//if character == new line
         {
             count++;
         }
         ++i;
     }
-    cout << "\nThere are " << count << " line in the given file\n";
+    cout << "\nThere are " << count << " line in the given file";
 }
 
 string stringToLower(string str) // Function to convert string to lower case 
