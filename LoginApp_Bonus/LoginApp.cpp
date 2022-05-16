@@ -1,4 +1,4 @@
-/*#include "LoginFunctions.h"
+#include "LoginFunctions.h"
 #include "LoginFunctions.cpp"
 
 int _tmain()
@@ -6,4 +6,3 @@ int _tmain()
     extractFileData();
     menu();
 }
-*/
