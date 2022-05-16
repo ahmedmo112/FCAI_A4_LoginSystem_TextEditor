@@ -1,3 +1,13 @@
+// FCAI - Programming 1 - 2022 - Assignment 4
+// Program Name: Text Editor
+// Program Description: Edit on text files
+// Last Modification Date: 14/5/2022
+// Second author - ID : Ahmed Mohamed Hany / 20210038
+// First author - ID : Salma Mohammed Mahmoud / 20210161
+// Third author - ID : Ahmed Reda Elsayed / 20210018
+// Under The Supervision of: Dr. Mohamed El-Ramly
+
+
 #include "TextEditorFunc.h"
 
 int displayMenu()
@@ -117,7 +127,7 @@ void addingContent()
     char text[10000];
     cout << "Enter the text you want to append: ";
     cin.ignore();
-    cin.getline(text, 10000, char(26));
+    cin.getline(text, 10000, char(26)); // take input character by character until faces (CTRl + z) which is (26) by ascii
     if (content != "")
     {
         content += "\n";
@@ -146,7 +156,7 @@ void encryptContent()
         }
         else
         {
-            encrypt += char(int(i) + 1);
+            encrypt += char(int(i) + 1); // encrypt each character by one in ascii
         }
     }
     content = encrypt;
@@ -163,7 +173,7 @@ void decryptContent()
         }
         else
         {
-            decrypt += char(int(i) - 1);
+            decrypt += char(int(i) - 1); // decrypt each character by one in ascii
         }
     }
     content = decrypt;
@@ -174,9 +184,9 @@ void merge()
     fstream file2;
     char name[80];
     char ch;
-    cout << "Enter file name\n";
+    cout << "Enter file name: ";
     cin >> name;
-    file2.open(name);
+    file2.open(name); // open the second file to merge
     if (file2.fail())
     {
         cout << "Invalid File Name" << endl;
@@ -187,7 +197,7 @@ void merge()
         content += '\n';
         while (!file2.eof())
         {
-            content += ch;
+            content += ch;// add each character from second file to the first file
             file2.get(ch);
         }
         file2.close();
@@ -200,7 +210,7 @@ void countWords()
     unsigned count = 0;
     int state = 0, i = 0, out = 0, in = 1;
 
-    while (content[i] != '\0')
+    while (content[i] != '\0') // (\0) is the NULL character it has the value zero
     {
         if (content[i] == ' ' || content[i] == '\n' || content[i] == '\t')
             state = out;
@@ -212,7 +222,7 @@ void countWords()
 
         ++i;
     }
-    cout << "\nThere are " << count << " word in the given file";
+    cout << "\nThere are " << count << " word in the given file\n";
 }
 
 void countCharacters()
@@ -224,7 +234,7 @@ void countLines()
 {
 
     int count = 1, i = 0;
-    while (content[i] != '\0')
+    while (content[i] != '\0')// (\0) is the NULL character it has the value zero
     {
         if (content[i] == '\n')
         {
@@ -232,7 +242,7 @@ void countLines()
         }
         ++i;
     }
-    cout << "\nThere are " << count << " line in the given file";
+    cout << "\nThere are " << count << " line in the given file\n";
 }
 
 string stringToLower(string str) // Function to convert string to lower case 
@@ -247,37 +257,37 @@ string stringToLower(string str) // Function to convert string to lower case
 void findWord()
 {
     int count = 0;
-    vector<string> splited_words;
-    string store_str, word;
-    char lowerStr[2000];
+    vector<string> word_by_word;
+    string store_word, temp;
+    char lowerStr_arr[2000];
     bool check = false;
 
     cout << "Please Enter a Word: ";
-    cin >> word;
-    word = stringToLower(word);
+    cin >> temp;
+    temp = stringToLower(temp);
 
     for (int i = 0; i < content.length(); i++)
     {
-        lowerStr[i] = tolower(content[i]);
+        lowerStr_arr[i] = tolower(content[i]);
     }
 
     for (int i = 0; i < content.length(); i++)
     {
-        if (lowerStr[i] != ' ' && lowerStr[i] != '\n')
+        if (lowerStr_arr[i] != ' ' && lowerStr_arr[i] != '\n')
         {
-            store_str += lowerStr[i];
+            store_word += lowerStr_arr[i];
         }
         else
         {
-            splited_words.push_back(store_str);
-            store_str = "";
+            word_by_word.push_back(store_word); // push back words to vector
+            store_word = "";
         }
     }
-    splited_words.push_back(store_str);
+    word_by_word.push_back(store_word);
 
-    for (int i = 0; i < splited_words.size(); i++)
+    for (int i = 0; i < word_by_word.size(); i++)
     {
-        if (word == splited_words[i])
+        if (temp == word_by_word[i]) // check if entered word to find is exist in vector
         {
             check = true;
             break;

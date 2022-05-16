@@ -1,3 +1,13 @@
+// FCAI - Programming 1 - 2022 - Assignment 4
+// Program Name: Login Application
+// Program Description: Login System allow user to (Register - Login - Change Password)
+// Last Modification Date: 11/5/2022
+// Second author - ID : Ahmed Mohamed Hany / 20210038
+// First author - ID : Salma Mohammed Mahmoud / 20210161
+// Third author - ID : Ahmed Reda Elsayed / 20210018
+// Under The Supervision of: Dr. Mohamed El-Ramly
+
+
 #include "LoginFunctions.h"
 
 int menu()
@@ -14,18 +24,22 @@ int menu()
         
         if (choice == 1)
         {
+            cout << "--------------------You are now in Register page--------------------" << endl;
             reg();
         }
         else if (choice == 2)
         {
+            cout << "--------------------You are now in Login page--------------------" << endl;
             login();
         }
         else if (choice == 3)
         {
+            cout << "--------------------You are now in Change Password page--------------------" << endl;
             changePassword();
         }
         else if (choice == 4)
         {
+            cout << "Good Bye, Hope Satisfy you" << endl;
             return 0;
         }
         else
@@ -62,20 +76,19 @@ void extractFileData() // Function to extract the data from file
 
 bool isValidName(string str3)
 {
-    regex valid_name("[a-zA-Z_]+");
-    return regex_match(str3, valid_name);
+    regex valid_name("[a-zA-Z_]+"); // User Name format by regex expression
+    return regex_match(str3, valid_name); // check if the entered user name match user name format that formed by regex
 }
 
 bool isValidEmail(string str)
 {
-    regex valid_email("[^.]([a-zA-Z0-9#!%$‘&+*–/=?^_`{|}~][.]?)+@[a-zA-Z]+(.com)");
-    // regex valid_email("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
-    return regex_match(str, valid_email);
+    regex valid_email("[^.]([a-zA-Z0-9#!%$‘&+*–/=?^_`{|}~][.]?)+@[a-zA-Z]+(.com)"); // Email format by regex expression
+    return regex_match(str, valid_email); // check if the entered email match email format that formed by regex
 }
 bool isValidPhoneNumber(string str2)
 {
     regex valid_PN("(01)(0|1|2|5)[0-9]+");
-    return regex_match(str2, valid_PN);
+    return regex_match(str2, valid_PN); // check if the entered phone number match phoner number format that formed by regex
 }
 
 bool isRegID(int id) // function chackes if the id is Registered before
@@ -92,7 +105,7 @@ void userId()
     cout << "Please enter your id: ";
     cin >> user.userId;
 
-    while (isRegID(user.userId))
+    while (isRegID(user.userId)) // check that entered id not used before by another registered user
     {
         cout << "you entered ID that has been registered, please enter another ID:  ";
         cin >> user.userId;
@@ -103,7 +116,7 @@ void userName()
 {
     cout << "Please enter your name: ";
     cin >> user.userName;
-    while (!(isValidName(user.userName)))
+    while (!(isValidName(user.userName))) // check that entered user name match user name format that formed by regex 
     {
         cout << "you entered name with incorrect format, please enter correct name: ";
         cin >> user.userName;
@@ -117,7 +130,7 @@ void email()
 
     for (auto j = map_users.begin(); j != map_users.end(); ++j)
     {
-        while ((!(isValidEmail(user.email))) || (user.email == j->second.email))
+        while ((!(isValidEmail(user.email))) || (user.email == j->second.email)) // check that entered email not used before by another registered user and check that entered email match email format that formed by regex 
         {
             cout << "you can't use this entered email, please enter another email: ";
             cin >> user.email;
@@ -128,7 +141,7 @@ void email()
 
 
 string passwd;
-void coverPassword()
+void coverPassword() // take password from user with (*) format
 {
     int ch = 0;
     passwd = "";
@@ -155,7 +168,7 @@ void coverPassword()
 }
 
 string passwd2;
-void repeatPassword()
+void repeatPassword() // take password from user with (*) format
 {
     int chh;
     while (chh = getch())
@@ -200,7 +213,7 @@ void comparesPasswords()
     }
 }
 
-bool strongNess(string &input)
+bool strongNess(string &input) // check that password is strong
 {
     int n = input.length();
 
@@ -254,8 +267,7 @@ void password()
         cout << "\nmake sure that : \n 1- including letters, numbers, and upper and lower case \n 2- never use less than 8 characters\n ";
         cout << "Please enter your password: ";
         coverPassword();
-        // strongNess(passwd);
-    } while (!(strongNess(passwd)));
+    } while (!(strongNess(passwd))); 
     cout << endl;
     cout << "repeat password : ";
     repeatPassword();
@@ -267,7 +279,7 @@ void phoneNumber()
 {
     cout << "Please enter your phone number: ";
     cin >> user.phoneNumber;
-    while ((!(isValidPhoneNumber(user.phoneNumber))) || (user.phoneNumber.length() != 11))
+    while ((!(isValidPhoneNumber(user.phoneNumber))) || (user.phoneNumber.length() != 11)) // check that phone number length is 11 and check that entered phone number match phone number format that formed by regex 
     {
         cout << "you entered phone number with incorrect format, please enter correct phone number: ";
         cin >> user.phoneNumber;
@@ -391,6 +403,9 @@ void checkTheOldPass() // function to chacking the old pass is true
 
 void newPass() // Function take the new password
 {
+    passwd = "";
+    passwd2 = "";
+
     do
     {
         //display the rules
@@ -419,6 +434,6 @@ void changePassword() // The main function to change password
     checkTheOldPass(); // take the old password and chack is true 
     newPass(); // take the new password
     storeAndChangePass(); // saving the new password
-    cout << "Password Changed Successfully\n\n";
+    cout << "\nPassword Changed Successfully\n\n";
     storeData(); //save data to file 
 }
