@@ -12,8 +12,11 @@ const int ConnectSTARTTLS = 2;
 const int ConnectDirectSSL = 3;
 const int ConnectTryTLS = 4;
 
-int _tmain()
+int requestOTP(int OTP_code, string email)
 {
+    string bodyMessage = "Verify Your OTP: ";
+    bodyMessage += to_string(OTP_code);
+    
     ::CoInitialize(NULL);
 
     IMailPtr oSmtp = NULL;
@@ -23,12 +26,12 @@ int _tmain()
     // Set your sender email address
     oSmtp->FromAddr = _T("ahmedreda5338@gmail.com");
     // Add recipient email address
-    oSmtp->AddRecipientEx(_T("amhk11827@gmail.com"), 0);
+    oSmtp->AddRecipientEx(email.c_str(), 0);
 
     // Set email subject
     oSmtp->Subject = _T("Login System - OTP Code");
     // Set email body
-    oSmtp->BodyText = _T("Verify Your OTP: 7703");
+    oSmtp->BodyText = (bodyMessage.c_str());
 
     // Your SMTP server address
     oSmtp->ServerAddr = _T("smtp.gmail.com");
