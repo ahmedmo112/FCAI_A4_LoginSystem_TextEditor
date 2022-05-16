@@ -315,13 +315,12 @@ void reg()
 
 void sendOTP()
 {
-    int code = rand() % 9000 + 1000;
-    cout << code;
-    requestOTP(code, map_users[user.userId].email);
+    int OTP_code = rand() % 9000 + 1000;
+    requestOTP(OTP_code, map_users[user.userId].email);
     cout << "Your OTP has been sent to your email, please check your email\nEnter OTP Code: ";
     int checkOTP;
     cin >> checkOTP;
-    if (code == checkOTP)
+    if (OTP_code == checkOTP)
     {
         cout << "Verified OTP, Enter The New Password: " << endl;
         newPass();
