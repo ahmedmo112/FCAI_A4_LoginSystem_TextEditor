@@ -145,16 +145,17 @@ void coverPassword() // take password from user with (*) format
 {
     int ch = 0;
     passwd = "";
-    while (ch = getch())
+    while (ch = getch())//“while user still input” 
     {
         if (ch == 13)
-        {
+        {             //if the input ==13 “enter” will break from the loop 
             break;
         }
         else if (ch == 8)
-        {
+        {                     //if the input ==8 “delete” will delete last input
             if (passwd.length() > 0)
-            {
+            {                        //if to check if the password is already >0  will delete last input
+
                 cout << "\b \b";
                 passwd.erase(passwd.length() - 1);
             }
@@ -170,17 +171,17 @@ void coverPassword() // take password from user with (*) format
 string passwd2;
 void repeatPassword() // take password from user with (*) format
 {
-    int chh;
+   int chh;
     while (chh = getch())
-    {
+    {                      //“while user still input” 
         if (chh == 13)
-        {
+        {                  //if the input ==13 “enter” will break from the loop 
             break;
         }
         else if (chh == 8)
-        {
+        {                  //if the input ==8 “delete” will delete last input
             if (passwd2.length() > 0)
-            {
+            {              //if to check if the password is already >0  will delete last input
                 cout << "\b \b";
                 passwd2.erase(passwd2.length() - 1);
             }
@@ -198,12 +199,13 @@ void comparesPasswords()
     int pass = 3;
     while (pass > 0)
     {
-        if (passwd != passwd2)
+        if (passwd != passwd2)//check if the 2 password aren’t equal 
         {
-            passwd2 = "";
+            passwd2 = "";//make repeated password empty
             cout << endl;
             cout << "passwords are not the same \n please enter it again : ";
-            repeatPassword();
+            //make user repeat a password again and minus 1 from pass
+            repeat_password();
             pass -= 1;
         }
         else
@@ -213,11 +215,13 @@ void comparesPasswords()
     }
 }
 
+
 bool strongNess(string &input) // check that password is strong
 {
-    int n = input.length();
+    int n = input.length();// int n = length of password 
 
-    // Checking lower alphabet in string
+    //  make a bool function which return true or false and
+    // initialize 4 bool variable to check the structure of strong password and equal the to false 
     bool hasLower = false, hasUpper = false;
     bool hasDigit = false, specialChar = false;
     string normalChars = "abcdefghijklmnopqrstu"
@@ -226,15 +230,15 @@ bool strongNess(string &input) // check that password is strong
     for (int i = 0; i < n; i++)
     {
         if (islower(input[i]))
-            hasLower = true;
+            hasLower = true;//do a for loop check if lower make bool variable “lower” true if the character is lower  
         if (isupper(input[i]))
-            hasUpper = true;
+            hasUpper = true;//check if upper make bool variable “upper” true if the character is upper
         if (isdigit(input[i]))
-            hasDigit = true;
+            hasDigit = true;//, check if digit make bool variable “digit” true if the character is digit
 
         size_t special = input.find_first_not_of(normalChars);
         if (special != string::npos)
-            specialChar = true;
+            specialChar = true;//check if special chr make bool variable “special chr” true if the character is special chr
     }
     int pass = 3;
 
@@ -244,36 +248,38 @@ bool strongNess(string &input) // check that password is strong
         specialChar && (n >= 8))
     {
         cout << "Strong" << endl;
-        return true;
+        return true;//check if the 4 bool variable is true an n is more than 8 return true “ means strong” and output strong password
     }
     else if ((hasLower || hasUpper) &&
              specialChar && (n >= 6))
     {
         cout << "Moderate" << endl;
-        return false;
+        return false;//if any of 4 bool variable is false means return false “means password moderate ” output moderate
     }
     else
     {
         cout << "Weak" << endl;
-        return false;
+        return false;//if any of 4 bool variable is false means return false “means password  week” output week 
     }
 }
 
 void password()
 {
     cin.ignore();
+    //take input from the user
     do
     {
         cout << "\nmake sure that : \n 1- including letters, numbers, and upper and lower case \n 2- never use less than 8 characters\n ";
         cout << "Please enter your password: ";
-        coverPassword();
-    } while (!(strongNess(passwd))); 
+        coverpassword();//call function
+        // StrongNess(passwd);
+    } while (!(StrongNess(passwd)));//while password is not strong the program will ask user to repeat password
     cout << endl;
     cout << "repeat password : ";
-    repeatPassword();
+    repeat_password();// call function
     cout << endl;
-    comparesPasswords();
-    user.password = passwd;
+    compares_passwords();// call function
+    user.password = passwd;//equal password to user password in program
 }
 void phoneNumber()
 {
